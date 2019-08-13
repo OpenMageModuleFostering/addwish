@@ -27,13 +27,24 @@ class Addwish_Awext_Adminhtml_AwextController extends Mage_Adminhtml_Controller_
 		}
 	}
 	public function viewAction(){
+
 		$this->loadLayout();
 		$this->_initLayoutMessages('core/session');
 		$this->_setActiveMenu('awext/awext');
 		$this->_addBreadcrumb(Mage::helper('adminhtml')->__('AddWish'), Mage::helper('adminhtml')->__('AddWish'));
 		$this->_addBreadcrumb(Mage::helper('adminhtml')->__('AddWish'), Mage::helper('adminhtml')->__('AddWish'));
-
 		$this->getLayout()->getBlock('head')->setCanLoadExtJs(true);
+		$currentStore= Mage::app()->getDefaultStoreView()->getStoreId();
+		if(Mage::app()->getRequest()->getParam('storeconfig')!=""){
+			$currentStore=Mage::app()->getRequest()->getParam('storeconfig');
+		}
+		$loadValues= Mage::getModel('awext/awext')->load($currentStore);
+		if(count($loadValues->getData())<=0){
+			
+			$data = array('id'=>$currentStore,'searchUUID'=>'');
+			$model = Mage::getModel('awext/awext')->setData($data);
+			$insertId = $model ->save()->getId();
+		}
 		if ($data = $this->getRequest()->getPost()) {
 			switch($data['action']){
 			case "dataexport":
@@ -63,7 +74,7 @@ class Addwish_Awext_Adminhtml_AwextController extends Mage_Adminhtml_Controller_
 			}
 			$model = Mage::getModel('awext/awext');
 			$model->setData($k)
-			->setId(1);
+			->setId($currentStore);
 
 			try {
 				$model->save();
