@@ -1,6 +1,8 @@
 <?php
 $product = Mage::registry('current_product');
 $productData = Mage::helper('awext')->getProductData($product);
+unset($productData['qty']);
+unset($productData['visibility']);
 
 $parts=explode("uenc/", Mage::helper('checkout/cart')->getAddUrl($product));
 $parts=explode("/product",$parts[1]);

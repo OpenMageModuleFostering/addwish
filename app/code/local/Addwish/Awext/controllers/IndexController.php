@@ -192,7 +192,7 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 			->getCollection()
 			->addWebsiteFilter(array(Mage::app()->getStore()->getWebsiteId()))
 			->addStoreFilter(Mage::app()->getStore()->getStoreId())
-			->addAttributeToFilter('visibility', 4)
+			->addAttributeToFilter('visibility', array('neq' => Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE))
 			->addAttributeToSelect('*')
 			->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
 
