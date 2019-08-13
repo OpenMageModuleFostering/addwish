@@ -1,5 +1,5 @@
 <?php
-$customerEmail=Mage::getSingleton('core/session')->getAddWishEmail($email);
+$customerEmail=Mage::getSingleton('core/session')->getAddWishEmail();
 if(isset($customerEmail)){
 ?>
 <meta content="<?php echo $customerEmail;?>" name="aw:userEmail"/>

@@ -3,10 +3,11 @@ $product = Mage::registry('current_product');
 $specialPrice = number_format($product->getSpecialPrice(), 2, '.', '');
 $regularPrice = number_format($product->getPrice(), 2, '.', '');
 $product_image=Mage::helper('catalog/image')->init($product , 'thumbnail')->resize(256);
+$imageUrl = Mage::helper('catalog/image')->init($product , 'thumbnail')->resize(256);
 ?>
 <span class="addwish-product-info" style="display:none"
 data-title="<?php echo htmlentities($product->getName());?>"
-data-imgurl="<?php echo $product_image;?>"
+data-imgurl="<?php echo $imageUrl ;?>"
 <?php
 if(isset($specialPrice) && $specialPrice>0){
 	echo 'data-price="'.$specialPrice.'"';
@@ -63,6 +64,6 @@ $uencURL=Mage::helper('checkout/cart')->getAddUrl($product);
 $elem1=explode("uenc/",$uencURL);
 $elem2=explode("/product",$elem1[1]);
 ?>
-data-formkey='<?php echo Mage::getSingleton('core/session')->getFormKey();?>'
+ data-formkey='<?php echo Mage::getSingleton('core/session')->getFormKey();?>'
 data-uenc='<?php echo $elem2[0];?>'
 ></span>

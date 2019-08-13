@@ -1,0 +1,4 @@
+<?php
+class Addwish_Awext_Block_Adminhtml_Awext_Renderer extends Mage_Adminhtml_Block_Widget_Form_Container
+{
+}
