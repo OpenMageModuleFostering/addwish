@@ -96,8 +96,11 @@ $allowedIps=explode(",",$model->getData('ipaddress'));
 }
 		header("Content-type: text/xml");
 		$products_out='<?xml version="1.0" encoding="UTF-8"?><products>';
-		$products = Mage::getModel('catalog/product')->getCollection()->addAttributeToFilter('visibility', 4);
-		$products->addAttributeToSelect('*');
+		$products = Mage::getModel('catalog/product')->getCollection()->addStoreFilter(Mage::app()->getStore()->getStoreId())->addAttributeToFilter('visibility', 4);
+		$products->addAttributeToSelect('*')->addAttributeToFilter(
+    'status',
+    array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
+);
 		foreach($products as $product) {
 			$imageUrl = Mage::helper('catalog/image')->init($product , 'thumbnail')->resize(256);
 			$specialPrice = number_format($product->getSpecialPrice(), 2, '.', '');
