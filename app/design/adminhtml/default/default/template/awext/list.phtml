@@ -1,0 +1,126 @@
+<link rel="stylesheet" href="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>adminhtml/default/default/css/addwish.css" />
+<link rel="stylesheet" href="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>adminhtml/default/default/boxes.css" />
+<div style="float: left; margin-top: 0;">
+	<img src="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>adminhtml/default/default/images/addwish/addwish.png" alt="addwish logo" />
+</div>
+<div class='clear'></div>
+<div class="introtext">Great! You’ve successfully installed the addwish for business extension. This will allow you to quickly implement changes to how addwish functions on your webshop. We’ve made the extension as easy to use as possible but if you do have any questions don’t hesitate to contact us on <a href="mailto:support@addwish.com">support@addwish.com</a>. Alternatively, check out our FAQs on <a href="http://addwish.com/company/faq.html" target="_blank">http://addwish.com/company/faq.html</a>. We hope you enjoy growing your business with addwish!</div>
+<div class="entry-edit">
+	<div class="entry-edit-head collapseable">
+		<a onclick="Fieldset.toggleCollapse('general_region', ''); return false;" href="#" id="general_region-head" class="">Script Setup</a>
+	</div>
+	<form action='' method='post'>
+<?php
+$currentStore= Mage::app()->getDefaultStoreView()->getStoreId();
+if(Mage::app()->getRequest()->getParam('storeconfig')){
+$currentStore=Mage::app()->getRequest()->getParam('storeconfig');
+}
+?>
+<input type='hidden' name='action' value='scriptsetup'/>
+		<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+		<fieldset id="general_region" class="config collapseable">
+			<legend>Script Setup</legend>
+			<?php 
+			$model = Mage::getModel('awext/awext')->load($currentStore);
+			?>
+			<div class="introtext" style="margin-bottom: 10px">
+In order to use this extension you'll need to have an addwish business ID.<br>If you don't already have one you can sign up for one on our <a href="http://www.addwish.com/business/"target="_blank">webpage</a> <br>
+Once you have an addwish business ID enter it in the box below and press save.</div>
+
+				
+			<div style="float: left">
+  <p>Your addwish ID</p>
+</div>
+<div style="float: left; margin-left: 20px;">
+<input type='text' name='addwishID' size="40" value='<?php echo $model->getData('userId');?>'/>
+</div>
+<div style="float: left; margin-left: 20px;">
+	<input type="submit" class="form-button" value="Save" name="submit">
+</div>
+<div style="clear:both">
+
+</div>
+			
+		</fieldset>
+	</form>
+</div>
+
+<div class='clear'></div>
+<div class="entry-edit">
+	<div class="entry-edit-head collapseable">
+		<a
+			onclick="Fieldset.toggleCollapse('general_Dataregion', ''); return false;"
+			href="#" id="general_Dataregion-head" class="">Data Export Setup</a>
+	</div>
+	<form action='' method='post'>
+	<input type='hidden' name='action' value='dataexport'/>
+		<input name="form_key" type="hidden"
+			value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+		<fieldset id="general_Dataregion" class="config collapseable">
+			<legend>Data Export Setup</legend>
+			<div style="margin-bottom: 10px" class="introtext">
+This extension will automatically create a product feed and an order history feed, which will allow addwish to correctly identify and display all the products on your webshop <br>and create relations between them, based on your historical orders. <br>
+<br>  
+The product feed is being updated once pr. day. As generating the feed requires the plugin to read all product data we recommend that you choose a time when this feed can automatically re-generate daily. Please select from the drop-down selction below.
+<br>
+If you want to disable the product or order history feed you can do so below, however this will cause the addwish features to stop being updated and stop from displaying up-to-date.<br><br>
+
+We have included a text area, where you can enter the IP addresses that you would allow to fetch the data feeds. The addwish IP has been pre-entered. If you would like to add another IP address, you can do so by clicking edit. If you delete all the IP addresses from this box the data exports will be publicly available.
+ 
+
+
+
+
+</div>			
+<h6>Product feed</h6> 
+<div style="float:left">
+					 <input type="checkbox" value="1" name="enable_product_feed" <?php if($model->getData('enable_product_feed')==1){echo "checked='checked'";} ?>/><label style="margin-left: 10px;">Product feed</label>
+                                                <p>You can access the feed from this URL: <a target="_blank" href="<?php echo Mage::getBaseUrl();?>awext/index">/index.php/awext/index</a> - <i><b>Please note that the feed is generated when ever the feed is requested, so coordinate with addwish as for when is the best time to request the feed</b></i></p><i><b>
+                                        </b></i>
+					</div>
+						
+<br>
+      
+      <br>
+
+<div style="clear:both"></div>
+  <hr>
+
+<div style="margin-top: 10px;">		
+<h6>Order feed</h6><p>Enable and disable the order feed here. Addwish uses this to gather all needed information from historical orders to get the best possible data for our algorithms. You can access the order feed from this link 
+      <a href="<?php echo Mage::getBaseUrl();?>awext/index/orderList/?exportFromDate=2015-11-11&amp;exportToDate=2015-12-11" target="_blank">/awext/index/orderList/?exportFromDate=2015-11-11&amp;exportToDate=2015-12-11</a></p>
+      </div>
+      <div style="clear:both; margin-top: 5px;"></div>
+<div style="float:left">
+<input type="checkbox" value="1" name="enable_order_feed" <?php if($model->getData('enable_order_export')==1){echo "checked='checked'";} ?>/><label for="general_region_display_all" style="margin-left: 10px;">Order feed</label>
+      </div>
+      <div style="clear:both; margin-top: 5px;"></div>
+      <br>
+      <hr>
+
+<div style="margin-top: 10px;">		
+<h6>Feed access settings</h6><p>Indicate which IP addresses you will allow to access you feed data. The addwish IP is pre-entered into the text field below. Seperate each IP address with a komma. If you delete all IP addresses, all IP addresses, everybody can access your feeds.
+</p><div>
+  <textarea name="ipaddress" id="ipaddress" style="width: 297px; height: 77px;" disabled="disabled"><?php echo $model->getData('ipaddress');?></textarea></textarea>  <a href="javascript:void(0);" onclick="editip();">edit</a></div>
+            <div style="clear:both"></div>
+      <br>
+      <hr>
+        <div style="clear: both; margin-top: 10px;"></div>
+
+        <div style="float: left;">
+        <input type="submit" name="submit" value="Update Settings" class="form-button">
+        </div>
+<br>        
+<div style="clear: both; margin-top: 10px;"></div>
+  
+		</div>
+
+
+		</fieldset>
+	</form>
+</div>
+<script language='javascript'>
+function editip(){
+	 document.getElementById("ipaddress").disabled = false;
+}
+</script>

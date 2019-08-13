@@ -1,0 +1,24 @@
+<?php
+$lastAddedProduct=Mage::getSingleton('checkout/session')->getLastAddedProductId(true);
+if($lastAddedProduct>0){
+	$product=Mage::getModel('catalog/product')->load($lastAddedProduct);
+?>
+
+  
+<span id="addwish-upsell-1"></span>
+<span id="addwish-upsell-2"></span>
+<span class="addwish-upsell-info" style="display:none" data-url="<?php echo $product->getProductUrl();?>"></span>
+
+<?php
+}else{
+$productId=$this->getRequest()->getParam('productId');
+if($productId>0){
+$product=Mage::getModel('catalog/product')->load($productId);
+?><span id="addwish-upsell-1"></span>
+<span id="addwish-upsell-2"></span>
+<span class="addwish-upsell-info" style="display:none" data-url="<?php echo $product->getProductUrl();?>"></span>
+
+<?php
+}
+}
+?>

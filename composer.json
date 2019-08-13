@@ -3,7 +3,7 @@
     "type": "magento-module",
     "license": "GNU-General-Public-License-(GPL)",
     "homepage": "",
-    "description": "New improved addwish extension with mult-site key network support",
+    "description": "New multisite module",
     "authors": [
     {
         "name": "addwish",

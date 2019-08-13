@@ -1,0 +1,30 @@
+<?php
+$order = Mage::getSingleton('sales/order'); 
+$order->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
+?>
+<span class="addwish-conversion" style="display:none;"
+data-tax="<?php echo number_format(Mage::helper('checkout')->getQuote()->getShippingAddress()->getData('tax_amount'), 2, '.', '');?>"
+data-ordernumber="<?php echo $order->getIncrementId();?>"
+data-total="<?php echo number_format($order->getSubtotal(), 2, '.', '');?>"
+>
+
+<?php
+$cartItems= $order->getAllItems();
+foreach($cartItems as $cartProduct){
+	$product=Mage::getModel('catalog/product')->load($cartProduct->getData('product_id'));
+if($product->isVisibleInSiteVisibility()){
+	?>
+	<span class="addwish-product"
+data-unit-price="<?php echo number_format($cartProduct->getData('price'), 2, '.', '');?>"
+data-url="<?php echo $product->getProductUrl();?>"
+data-productnumber="<?php echo $product->getId();?>"
+data-sku="<?php echo $product->getSku();?>"
+data-quantity="<?php echo (int)$cartProduct->getData('qty_ordered');?>"
+data-unit-tax="<?php echo number_format($cartProduct->getData('tax_amount'), 2, '.', '');?>">
+</span>
+	<?php
+}
+}
+?>
+
+</span>

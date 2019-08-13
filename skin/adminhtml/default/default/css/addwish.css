@@ -1,0 +1,11 @@
+.introtext {
+    margin-bottom: 43px;
+}
+#informative {
+    list-style: outside none circle;
+}
+#addwish_store_selector {
+    float: right;
+    position: absolute;
+    right: 25px;
+}
