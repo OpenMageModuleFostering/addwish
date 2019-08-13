@@ -2,47 +2,43 @@
 <config>
 	<modules>
 		<Addwish_Awext>
-			<version>0.2.0</version>
+			<version>1.0.0</version>
 		</Addwish_Awext>
 	</modules>
-	
 	<frontend>
-
- 
 		<events>
-		
-		<sales_quote_address_save_after>
+			<sales_quote_address_save_after>
 				<observers>
-					<getbillingData>
+					<getBillingData>
 						<class>Addwish_Awext_Model_Observer</class>
-						<method>getbillingData</method>
-					</getbillingData>
+						<method>getBillingData</method>
+					</getBillingData>
 				</observers>
-		</sales_quote_address_save_after>
-		<controller_action_layout_load_before>
-				<observers>
-					<addwishHeader>
-						<class>Addwish_Awext_Model_Observer</class>
-						<method>addwishHeader</method>
-					</addwishHeader>
-				</observers>
-			</controller_action_layout_load_before>
+			</sales_quote_address_save_after>
 			<customer_register_success>
 				<observers>
-		                    <inspectCartAddData>
-		                        <class>Addwish_Awext_Model_Observer</class>
-		                        <method>customerRegisterData</method>
-		                    </inspectCartAddData>
-		                </observers>     
+					<customerRegisterData>
+						<class>Addwish_Awext_Model_Observer</class>
+						<method>customerRegisterData</method>
+					</customerRegisterData>
+				</observers>
 			</customer_register_success>
 			<checkout_cart_add_product_complete>
 				<observers>
-		                    <inspectCartAddData>
-		                        <class>Addwish_Awext_Model_Observer</class>
-		                        <method>inspectCartAddData</method>
-		                    </inspectCartAddData>
-		                </observers>     
+					<inspectCartAddData>
+						<class>Addwish_Awext_Model_Observer</class>
+						<method>inspectCartAddData</method>
+					</inspectCartAddData>
+				</observers>
 			</checkout_cart_add_product_complete>
+			<checkout_onepage_controller_success_action>
+                <observers>
+                    <orderSuccess>
+                        <class>Addwish_Awext_Model_Observer</class>
+                        <method>orderSuccess</method>
+                    </orderSuccess>
+                </observers>
+            </checkout_onepage_controller_success_action>
 		</events>
 		<routers>
 			<awext>
@@ -62,31 +58,22 @@
 		</layout>
 	</frontend>
 	<admin>
-
 		<routers>
-			<awext>
-				<use>admin</use>
+			<adminhtml>
 				<args>
-					<module>Addwish_Awext</module>
-					<frontName>awext</frontName>
+					<modules>
+						<addwish_awext after="Mage_Adminhtml">Addwish_Awext_Adminhtml</addwish_awext>
+					</modules>
 				</args>
-			</awext>
+			</adminhtml>
 		</routers>
 	</admin>
 	<adminhtml>
-		
 		<menu>
-
 			<awext module="awext">
 				<title>addwish</title>
-				<sort_order>1</sort_order>
-				<children>
-					<items module="awext">
-						<title>addwish Configuration</title>
-						<sort_order>0</sort_order>
-						<action>awext/adminhtml_awext/view</action>
-					</items>
-				</children>
+				<sort_order>80</sort_order>
+				<action>/awext/view</action>
 			</awext>
 		</menu>
 		<acl>
@@ -112,7 +99,6 @@
 			</updates>
 		</layout>
 	</adminhtml>
-
 	<global>
 		<models>
 			<awext>

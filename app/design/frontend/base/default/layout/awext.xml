@@ -1,17 +1,13 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-	<addwish_head_add>
-		<block type="core/template" name="addwishheader" template="addwish/addwish-head.phtml"/>
-		<reference name="header">
-			<action method="append"><block>addwishheader</block></action>
-		</reference>
-		<reference name="head">
-			<action method="append"><block>addwishheader</block></action>
-		</reference>
-	</addwish_head_add>
 	<default>
 		<reference name="before_body_end">
 			<block type="core/template" name="addwish-tracking" template="addwish/integrator.phtml" />
+			<block type="core/template" name="addwish-conversion" template="addwish/conversion-span.phtml"/>
+			<block type="core/template" name="addwish-basket" template="addwish/basket-span.phtml"/>
+		</reference>
+		<reference name="head">
+			<block type="core/template" name="addwish-header" template="addwish/addwish-head.phtml"/>
 		</reference>
 	</default>
 	<catalog_product_view>
@@ -19,16 +15,6 @@
 			<block type="core/template" name="addwish-cart" template="addwish/product-span.phtml" after="-" />
 		</reference>
 	</catalog_product_view>
-	<checkout_cart_index>
-		<reference name="before_body_end">
-			<block type="core/template" name="addwish-basket" template="addwish/basket-span.phtml" after="-" />
-		</reference>
-	</checkout_cart_index>
-	<checkout_onepage_success>
-		<reference name="before_body_end">
-			<block type="core/template" name="addwish-conversion" template="addwish/conversion-span.phtml" after="-" />
-		</reference>
-	</checkout_onepage_success>
 	<awext_index_search>
 		<reference name="content">
 			<block type="core/template" name="addwish-search-page" template="addwish/search-result-page.phtml" />

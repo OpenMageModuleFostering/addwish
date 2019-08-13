@@ -22,8 +22,5 @@ delete from `".$prefix."core_url_rewrite` where request_path in ('addwish-search
 INSERT INTO `".$prefix."addwish` (`id`, `userId`, `enableUpsells`,`ipaddress`) VALUES ('1', '', '0','46.137.110.51');");
 
 Mage::getModel('core/url_rewrite')->setIsSystem(0)->setOptions('')->setIdPath('Add Wish Search')->setTargetPath('/awext/index/search')->setRequestPath('addwish-search-result.html')->save();
-Mage::getModel('core/url_rewrite')->setIsSystem(0)->setOptions('')->setIdPath('Add Wish Order list')->setTargetPath('awext/index/orderlist')->setRequestPath('orderExportFeed.xml')->save();
-
 
 $installer->endSetup();
-?>

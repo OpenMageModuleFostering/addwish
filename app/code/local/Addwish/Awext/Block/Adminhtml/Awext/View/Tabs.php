@@ -7,7 +7,7 @@ class Addwish_Awext_Block_Adminhtml_Awext_View_Tabs extends Mage_Adminhtml_Block
   {
       parent::__construct();
       $this->setId('awext_tabs');
-	  $this->setTitle(Mage::helper('awext')->__('addwish Settings'));
+	  $this->setTitle(Mage::helper('awext')->__('addwish settings'));
   }
 
   protected function _beforeToHtml()
@@ -15,7 +15,7 @@ class Addwish_Awext_Block_Adminhtml_Awext_View_Tabs extends Mage_Adminhtml_Block
 		$this->addTab('details_section', array(
 			'label'     => Mage::helper('awext')->__('Setup'),
 			'title'     => Mage::helper('awext')->__('Setup'),
-			'content'   => $this->getLayout()->createBlock('awext/adminhtml_awext_view_tab_details_list')
+			'content'   => $this->getLayout()->createBlock('awext/adminhtml_awext_view_tab_details')
 							->toHtml(),
 			'active'    => ( $this->getRequest()->getParam('tab') == 'details_section' ) ? true : false,
 		));
@@ -23,7 +23,7 @@ class Addwish_Awext_Block_Adminhtml_Awext_View_Tabs extends Mage_Adminhtml_Block
 		$this->addTab('recommendation_section', array(
 			'label'     => Mage::helper('awext')->__('Recommendations'),
 			'title'     => Mage::helper('awext')->__('Recommendations'),
-			'content'   => $this->getLayout()->createBlock('awext/adminhtml_awext_view_tab_recommend_list')
+			'content'   => $this->getLayout()->createBlock('awext/adminhtml_awext_view_tab_recommend')
 							->toHtml(),
 			'active'    => ( $this->getRequest()->getParam('tab') == 'recommendation_section' ) ? true : false,
 		));
@@ -31,7 +31,7 @@ class Addwish_Awext_Block_Adminhtml_Awext_View_Tabs extends Mage_Adminhtml_Block
 		$this->addTab('search_section', array(
 			'label'     => Mage::helper('awext')->__('Search'),
 			'title'     => Mage::helper('awext')->__('Search'),
-			'content'   => $this->getLayout()->createBlock('awext/adminhtml_awext_view_tab_search_list')
+			'content'   => $this->getLayout()->createBlock('awext/adminhtml_awext_view_tab_search')
 							->toHtml(),
 			'active'    => ( $this->getRequest()->getParam('tab') == 'search_section' ) ? true : false,
 		));
