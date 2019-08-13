@@ -1,12 +1,7 @@
-.headertext {
-	padding-top: 60px;
-    padding-bottom: 30px;
-}
+
 .introtext {
-    margin-bottom: 30px;
+    margin-bottom: 43px;
 }
-#addwish_store_selector {
-    float: right;
-    position: absolute;
-    right: 25px;
+#informative {
+    list-style: outside none circle;
 }

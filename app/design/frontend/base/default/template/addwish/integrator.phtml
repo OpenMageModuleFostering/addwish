@@ -1,24 +1,17 @@
 <?php 
-$model = Mage::getModel('awext/awext')->load(Mage::app()->getStore()->getStoreId());
+$model = Mage::getModel('integrator/integrator')->load(1);
 if($model->getData('userId')!=''){
-	if(strlen($model->getData('userId'))==32){
-		$param="company/awAddGift.js#".$model->getData('userId')."";
-	}else{
-		$param="partner/".$model->getData('userId').".js";
-	}
 ?><script type="text/javascript">
 (function() {
-/* Addwish <?php echo Mage::getConfig()->getNode()->modules->Addwish_Awext->version ?> */
 var aws = document.createElement('script');
 aws.type = 'text/javascript';
 if (typeof(aws.async) != "undefined") { aws.async = true; }
 aws.src = (window.location.protocol == 'https:' ? 'https://d1pna5l3xsntoj.cloudfront.net' :
-'http://cdn.addwish.com') + '/scripts/<?php echo $param;?>';
+'http://cdn.addwish.com') + '/scripts/company/awAddGift.js#<?php echo $model->getData('userId');?>';
 var s = document.getElementsByTagName('script')[0];
 s.parentNode.insertBefore(aws, s);
 })();
 </script>
-<span id="addwish-data" data-formkey="<?php echo Mage::getSingleton('core/session')->getFormKey();?>" style="display:none"></span>
 <?php
 }
-
+?>

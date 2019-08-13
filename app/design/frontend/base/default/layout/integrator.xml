@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default>
+	    <reference name="head">
+	 	 <block type="core/template" name="addwish" template="addwish/integrator.phtml" />
+	    </reference>
+	</default>
+	<catalog_product_view>
+		<reference name="content"><block type="core/template" name="addwish" template="addwish/product-span.phtml" after="addtocart" /></reference>
+	</catalog_product_view>
+	<checkout_cart_index>
+		<reference name="content"><block type="core/template" name="addwish" template="addwish/basket-span.phtml" after="addtocart" /></reference>
+	</checkout_cart_index>
+	<checkout_onepage_success>
+		<reference name="content"><block type="core/template" name="addwish" template="addwish/conversion-span.phtml" after="addtocart" /></reference>
+	</checkout_onepage_success>
+
+    <integrator_index_search>
+		<reference name="content"><block type="core/template" name="addwish" template="addwish/search-result-page.phtml" /></reference>
+    </integrator_index_search>
+ <integrator_index_upsells>
+		<reference name="content"><block type="core/template" name="addwish" template="addwish/upsells-page.phtml" /></reference>
+    </integrator_index_upsells>
+
+<addwish_head_add translate="label">
+   <label>Custom Product View Based on New Handle</label>
+   <block type="core/template" name="addwish" template="addwish/addwish-head.phtml" />
+     <reference name="header">
+      <action method="append"><block>addwish</block></action>
+     </reference>
+	 <reference name="head">
+      <action method="append"><block>addwish</block></action>
+     </reference>
+ </addwish_head_add>
+</layout>
+

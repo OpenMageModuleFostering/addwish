@@ -3,21 +3,43 @@ $lastAddedProduct=Mage::getSingleton('checkout/session')->getLastAddedProductId(
 if($lastAddedProduct>0){
 	$product=Mage::getModel('catalog/product')->load($lastAddedProduct);
 ?>
+<div class="col-main">
+<a href="<?php echo $product->getProductUrl();?>" style="float:left" class="button">Continue Shopping</a>
+<a href="<?php echo Mage::helper('checkout/cart')->getCartUrl(); ;?>" style="float:right" class="button">Proceed to Checkout</a>
 
+<div style="clear:both; margin-top: 50px">
+  <h2>You have just added a product to the cart</h2>
+</div>
   
-<span id="addwish-upsell-1"></span>
-<span id="addwish-upsell-2"></span>
-<span class="addwish-upsell-info" style="display:none" data-url="<?php echo $product->getProductUrl();?>"></span>
+  
+<div class="sub-head-addwish"><h3>Here are some products that might have your interest</h3></div>
+<span id="addwish-upsell-1" style="display:none"></span>
 
+<div class="sub-head-addwish" style="margin-top: 50px;"><h3>Products chosen for you:</h3></div>
+<span id="addwish-upsell-2" style="display:none"></span>
+<span class="addwish-upsell-info" style="display:none" data-url="<?php echo $product->getProductUrl();?>"></span>
+</div>
 <?php
 }else{
 $productId=$this->getRequest()->getParam('productId');
 if($productId>0){
 $product=Mage::getModel('catalog/product')->load($productId);
-?><span id="addwish-upsell-1"></span>
-<span id="addwish-upsell-2"></span>
-<span class="addwish-upsell-info" style="display:none" data-url="<?php echo $product->getProductUrl();?>"></span>
+?><div class="col-main">
+<a href="<?php echo $product->getProductUrl();?>" style="float:left" class="button">Continue Shopping</a>
+<a href="<?php echo Mage::helper('checkout/cart')->getCartUrl(); ;?>" style="float:right" class="button">Proceed to Checkout</a>
 
+<div style="clear:both; margin-top: 50px">
+  <h2>You have just added a product to the cart</h2>
+</div>
+  
+  
+<div class="sub-head-addwish"><h3>Here are some products that might have your interest</h3></div>
+<span id="addwish-upsell-1" style="display:none"></span>
+
+<div class="sub-head-addwish" style="margin-top: 50px;"><h3>Products chosen for you:</h3></div>
+<span id="addwish-upsell-2" style="display:none"></span>
+<span class="addwish-upsell-info" style="display:none" data-url="<?php echo $product->getProductUrl();?>"></span>
+</div>
 <?php
 }
 }

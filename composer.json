@@ -1,9 +1,9 @@
 {
     "name": "OpenMageModuleFostering/addwish",
     "type": "magento-module",
-    "license": "GNU-General-Public-License-(GPL)",
+    "license": "OSL",
     "homepage": "",
-    "description": "New multisite module",
+    "description": "Personalized recommendations, search and wishlist",
     "authors": [
     {
         "name": "addwish",
