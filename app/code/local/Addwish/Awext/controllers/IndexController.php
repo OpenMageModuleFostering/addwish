@@ -45,11 +45,18 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 
 	}
 
+	// No access control on this method
+	public function infoAction() {
+		header("Content-type: text/xml");		
+		echo '<?xml version="1.0" encoding="UTF-8"?><info><version>'.$this->getExtensionVersion().'</version></info>';
+		exit;
+	}
+
 	public function storesAction() {
 		$this->verifyAccess();
 
 		header("Content-type: text/xml");		
-		echo '<?xml version="1.0" encoding="UTF-8"?><stores>';
+		echo '<?xml version="1.0" encoding="UTF-8"?><stores extension-version="'.self::getExtensionVersion().'">';
         foreach (Mage::app()->getWebsites() as $website) {
             foreach ($website->getGroups() as $group) {
                 $stores = $group->getStores();
@@ -62,7 +69,7 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
             }
         }
         echo '</stores>';
-
+        exit;
 	}
 	
 	public function orderListAction(){
@@ -93,7 +100,7 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 			->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE));
 
 		header("Content-type: text/xml");
-		echo '<?xml version="1.0" encoding="UTF-8"?><orders';
+		echo '<?xml version="1.0" encoding="UTF-8"?><orders extension-version="'.self::getExtensionVersion().'"';
 		if($pageSize > 0) {
 			$orders->setCurPage($page + 1);
 			$orders->setPageSize($pageSize);
@@ -146,7 +153,7 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 
 		header("Content-type: text/xml");
 		
-		echo '<?xml version="1.0" encoding="UTF-8"?><products';
+		echo '<?xml version="1.0" encoding="UTF-8"?><products extension-version="'.self::getExtensionVersion().'"';
 		if($pageSize > 0) {
 			$products->setCurPage($page + 1);
 			$products->setPageSize($pageSize);
@@ -205,5 +212,9 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
         return 'UNKNOWN';
 	}
 
+	private static function getExtensionVersion()
+	{
+		return Mage::getConfig()->getNode()->modules->Addwish_Awext->version;		
+	}
 
 }

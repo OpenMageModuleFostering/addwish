@@ -15,6 +15,6 @@ $productData['formkey'] = Mage::getSingleton('core/session')->getFormKey();
 		$value = json_encode($value);
 	}
 ?>
-	data-<?php echo strtolower($key)?>="<?php echo htmlspecialchars($value)?>"
+	data-<?php echo $key?>="<?php echo htmlspecialchars($value)?>"
 <?php endforeach ?>
 ></span>

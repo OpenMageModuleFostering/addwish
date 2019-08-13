@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Addwish_Awext>
-			<version>0.17.0</version>
+			<version>0.18.0</version>
 		</Addwish_Awext>
 	</modules>
 	<frontend>
@@ -73,13 +73,7 @@
 			<awext module="awext">
 				<title>addwish</title>
 				<sort_order>80</sort_order>
-				<children>
-					<items module="awext">
-						<title>addwish Configuration</title>
-						<sort_order>0</sort_order>
-						<action>/awext/view</action>
-					</items>
-				</children>
+				<action>/awext/view</action>
 			</awext>
 		</menu>
 		<acl>

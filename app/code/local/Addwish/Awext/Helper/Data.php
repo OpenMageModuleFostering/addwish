@@ -26,7 +26,7 @@ class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 		$data['currency'] = Mage::app()->getStore()->getCurrentCurrencyCode();
 		$data['hierarchies'] = $this->getProductHierarchies($product);
 		$data['brand'] = $product->getData('brand');
-		$data['inStock'] = $this->getProductInStock($product);
+		$data['instock'] = $this->getProductInStock($product);
 
 		if($product->getData('gender')) {
 			$attr = $product->getResource()->getAttribute("gender");
