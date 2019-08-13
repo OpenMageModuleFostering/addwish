@@ -103,12 +103,32 @@ $allowedIps=explode(",",$model->getData('ipaddress'));
 			$specialPrice = number_format($product->getSpecialPrice(), 2, '.', '');
 			$regularPrice = number_format($product->getPrice(), 2, '.', '');
 			$products_out.="<product><url>".$product->getProductUrl()."</url><title>".htmlspecialchars(htmlentities($product->getName(),ENT_QUOTES,'UTF-8'))."</title><imgurl>".$imageUrl."</imgurl>";
-			if(isset($specialPrice) && $specialPrice>0){
-				$products_out.= "<price>".$specialPrice."</price>";
-				$products_out.= "<previousprice>".$regularPrice."</previousprice>";
+			if(isset($specialPrice) && $specialPrice>0 && $specialPrice<$regularPrice ){
+				$today = date('Y-m-d');
+				$today=date('Y-m-d', strtotime($today));;
+				$spcialPriceDateBegin = date('Y-m-d', strtotime($product->getSpecialFromDate()));
+				$spcialPriceDateEnd = date('Y-m-d', strtotime($product->getSpecialToDate()));
+
+				if (($today > $spcialPriceDateBegin) && ($today < $spcialPriceDateEnd))
+				{
+					$products_out.= "<price>".$specialPrice."</price>";
+					$products_out.= "<previousprice>".$regularPrice."</previousprice>";
+				}
+				else
+				{
+					$products_out.= "<price>".$regularPrice."</price>";
+				}
+				
+				
+				
+				
+				
 			}else{
 				$products_out.= "<price>".$regularPrice."</price>";
 			}
+			
+			
+			
 			if($product->getMetaKeyword()!=''){
 				$products_out.= "<keywords>".htmlspecialchars(htmlentities($product->getMetaKeyword(),ENT_QUOTES,'UTF-8'))."</keywords>";
 			}
@@ -137,16 +157,32 @@ $allowedIps=explode(",",$model->getData('ipaddress'));
 			if($product->getData('brand')){
 				$products_out.= "<brand>".$product->getData('brand')."</brand>";
 			}
-			
-			if($product->isInStock()){
-				$products_out.= "<instock>true</instock>";
+			$product_inStock=0;
+			if($product->isConfigurable()){
+				$allProducts = $product->getTypeInstance(true)->getUsedProducts(null, $product);
+				foreach ($allProducts as $productD) {
+					if (!$productD->isSaleable()|| $productD->getIsInStock()==0) {
+						//out of stock for check child simple product
+					}else{
+						$product_inStock=1;
+					}
+				}
+				if($product_inStock==1){
+					$products_out.= "<instock>true</instock>";
+				}else{
+					$products_out.= "<instock>false</instock>";
+				}
 			}else{
-				$products_out.= "<instock>false</instock>";
+				if($product->isInStock()){
+					$products_out.= "<instock>true</instock>";
+				}else{
+					$products_out.= "<instock>false</instock>";
+				}
 			}
 			
 			if($product->getData('gender')){
-$attr = $product->getResource()->getAttribute("gender");
-	$genderLabel = $attr->getSource()->getOptionText($product->getData('gender'));
+				$attr = $product->getResource()->getAttribute("gender");
+				$genderLabel = $attr->getSource()->getOptionText($product->getData('gender'));
 				$products_out.= "<gender>".$genderLabel."</gender>";
 			}
 			if($product->getData('pricedetail')){
@@ -156,7 +192,7 @@ $attr = $product->getResource()->getAttribute("gender");
 			$products_out.= "</product>";
 		}
 		$products_out.= "</products>";
-echo $products_out;
+		echo $products_out;
 		exit;
 	}
 }

@@ -1,9 +1,9 @@
 {
     "name": "OpenMageModuleFostering/addwish",
     "type": "magento-module",
-    "license": "OSL",
+    "license": "GNU-General-Public-License-(GPL)",
     "homepage": "",
-    "description": "New and updated extesion to integrate all addwish features",
+    "description": "New and updated extension to integrate all addwish features",
     "authors": [
     {
         "name": "addwish",
