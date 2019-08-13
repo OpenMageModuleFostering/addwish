@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<awext_adminhtml_awext_index>
+		<reference name="head">
+			<action method="setTitle">
+				<title>addwish Settings</title>
+			</action>
+			<action method="setTitle">
+				<title>addwish Settings</title>
+			</action>
+			<action method="setCanLoadTinyMce">
+				<load>1</load>
+			</action>
+			<action method="setCanLoadExtJs">
+				<flag>1</flag>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/variables.js</script>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/wysiwyg/widget.js</script>
+			</action>
+			<action method="addJs">
+				<script>lib/flex.js</script>
+			</action>
+			<action method="addJs">
+				<script>lib/FABridge.js</script>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/flexuploader.js</script>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/browser.js</script>
+			</action>
+			<action method="addJs">
+				<script>prototype/window.js</script>
+			</action>
+			<action method="addItem">
+				<name>skin/adminhtml/default/default/lib/prototype/windows/themes/magento.css
+				</name>
+			</action>
+			<action method="addItem">
+				<type>js_css</type>
+				<name>prototype/windows/themes/default.css</name>
+			</action>
+		</reference>
+		<reference name="content">
+			<block type="awext/adminhtml_awext" name="awext" />
+		</reference>
+	</awext_adminhtml_awext_index>
+	<awext_adminhtml_awext_edit>
+		<reference name="head">
+			<action method="setTitle">
+				<title>addwish Settings</title>
+			</action>
+			<action method="setTitle">
+				<title>addwish Settings</title>
+			</action>
+			<action method="setCanLoadTinyMce">
+				<load>1</load>
+			</action>
+			<action method="setCanLoadExtJs">
+				<flag>1</flag>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/variables.js</script>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/wysiwyg/widget.js</script>
+			</action>
+			<action method="addJs">
+				<script>lib/flex.js</script>
+			</action>
+			<action method="addJs">
+				<script>lib/FABridge.js</script>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/flexuploader.js</script>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/browser.js</script>
+			</action>
+			<action method="addJs">
+				<script>prototype/window.js</script>
+			</action>
+			<action method="addItem">
+				<name>skin/adminhtml/default/default/lib/prototype/windows/themes/magento.css
+				</name>
+			</action>
+			<action method="addItem">
+				<type>js_css</type>
+				<name>prototype/windows/themes/default.css</name>
+			</action>
+		</reference>
+	</awext_adminhtml_awext_edit>
+
+
+
+	<awext_adminhtml_awext_view>
+		<reference name="head">
+			<action method="setTitle">
+				<title>addwish Settings</title>
+			</action>
+			<action method="setTitle">
+				<title>addwish Settings</title>
+			</action>
+			<action method="setCanLoadTinyMce">
+				<load>1</load>
+			</action>
+			<action method="setCanLoadExtJs">
+				<flag>1</flag>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/variables.js</script>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/wysiwyg/widget.js</script>
+			</action>
+			<action method="addJs">
+				<script>lib/flex.js</script>
+			</action>
+			<action method="addJs">
+				<script>lib/FABridge.js</script>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/flexuploader.js</script>
+			</action>
+			<action method="addJs">
+				<script>mage/adminhtml/browser.js</script>
+			</action>
+			<action method="addJs">
+				<script>prototype/window.js</script>
+			</action>
+			<action method="addItem">
+				<name>skin/adminhtml/default/default/lib/prototype/windows/themes/magento.css
+				</name>
+			</action>
+			<action method="addItem">
+				<type>js_css</type>
+				<name>prototype/windows/themes/default.css</name>
+			</action>
+		</reference>
+		<reference name="content">
+			<block type="awext/adminhtml_awext_view" name="awext" />
+		</reference>
+	</awext_adminhtml_awext_view>
+
+
+
+
+</layout>

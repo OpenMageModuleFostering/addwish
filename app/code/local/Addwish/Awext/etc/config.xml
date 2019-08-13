@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Addwish_Awext>
+			<version>0.2.0</version>
+		</Addwish_Awext>
+	</modules>
+	
+	<frontend>
+
+ 
+		<events>
+		
+		<sales_quote_address_save_after>
+				<observers>
+					<getbillingData>
+						<class>Addwish_Awext_Model_Observer</class>
+						<method>getbillingData</method>
+					</getbillingData>
+				</observers>
+		</sales_quote_address_save_after>
+		<controller_action_layout_load_before>
+				<observers>
+					<addwishHeader>
+						<class>Addwish_Awext_Model_Observer</class>
+						<method>addwishHeader</method>
+					</addwishHeader>
+				</observers>
+			</controller_action_layout_load_before>
+			<customer_register_success>
+				<observers>
+		                    <inspectCartAddData>
+		                        <class>Addwish_Awext_Model_Observer</class>
+		                        <method>customerRegisterData</method>
+		                    </inspectCartAddData>
+		                </observers>     
+			</customer_register_success>
+			<checkout_cart_add_product_complete>
+				<observers>
+		                    <inspectCartAddData>
+		                        <class>Addwish_Awext_Model_Observer</class>
+		                        <method>inspectCartAddData</method>
+		                    </inspectCartAddData>
+		                </observers>     
+			</checkout_cart_add_product_complete>
+		</events>
+		<routers>
+			<awext>
+				<use>standard</use>
+				<args>
+					<module>Addwish_Awext</module>
+					<frontName>awext</frontName>
+				</args>
+			</awext>
+		</routers>
+		<layout>
+			<updates>
+				<awext>
+					<file>awext.xml</file>
+				</awext>
+			</updates>
+		</layout>
+	</frontend>
+	<admin>
+    <routers>
+        <adminhtml>
+            <args>
+                <modules>
+                    <addwish_awext after="Mage_Adminhtml">Addwish_Awext_Adminhtml</addwish_awext>
+                </modules>
+            </args>
+        </adminhtml>
+    </routers>
+</admin>
+	<adminhtml>
+		
+		<menu>
+
+			<awext module="awext">
+				<title>addwish</title>
+				<sort_order>1</sort_order>
+				<children>
+					<items module="awext">
+						<title>addwish Configuration</title>
+						<sort_order>0</sort_order>
+						<action>/awext/view</action>
+					</items>
+				</children>
+			</awext>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Addwish_Awext>
+							<title>Awext Module</title>
+							<sort_order>10</sort_order>
+						</Addwish_Awext>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<awext>
+					<file>awext.xml</file>
+				</awext>
+			</updates>
+		</layout>
+	</adminhtml>
+
+	<global>
+		<models>
+			<awext>
+				<class>Addwish_Awext_Model</class>
+				<resourceModel>awext_mysql4</resourceModel>
+			</awext>
+			<awext_mysql4>
+				<class>Addwish_Awext_Model_Mysql4</class>
+				<entities>
+					<awext>
+						<table>addwish</table>
+					</awext>
+				</entities>
+			</awext_mysql4>
+		</models>
+		<resources>
+			<addwish_setup>
+				<setup>
+					<module>Addwish_Awext</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</addwish_setup>
+			<addwish_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</addwish_write>
+			<addwish_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</addwish_read>
+		</resources>
+		<blocks>
+			<awext>
+				<class>Addwish_Awext_Block</class>
+			</awext>
+		</blocks>
+		<helpers>
+			<awext>
+				<class>Addwish_Awext_Helper</class>
+			</awext>
+		</helpers>
+	</global>
+</config>
