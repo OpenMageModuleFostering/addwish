@@ -6,7 +6,19 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 
 	public function preDispatch() {
 		parent::preDispatch();
-		$this->model = Mage::getModel('awext/awext')->load(1);
+
+		$storeId = $this->getRequest()->getParam('store');
+        if (isset($storeId) && is_numeric($storeId)) {
+            try {
+                Mage::app()->getStore((int)$storeId);
+                Mage::app()->setCurrentStore((int)$storeId);
+            } catch (Exception $e) {
+                echo "Store not found";
+                exit;
+            }
+        }
+		$this->model = Mage::getModel('awext/awext')->load(Mage::app()->getStore()->getStoreId());
+
 		return $this;
 	}
 
@@ -33,18 +45,6 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 				exit;
 			}
 		}
-
-		$storeId = $this->getRequest()->getParam('store');
-        if (isset($storeId) && is_numeric($storeId)) {
-            try {
-                Mage::app()->getStore((int)$storeId);
-                Mage::app()->setCurrentStore((int)$storeId);
-                return;
-            } catch (Exception $e) {
-                echo "Store not found";
-                exit;
-            }
-        } 
 		if($return) {			
 			return true;
 		}
