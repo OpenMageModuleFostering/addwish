@@ -52,6 +52,7 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 
 	// No access control on this method
 	public function infoAction() {
+		ob_clean();
 		header("Content-type: text/xml");		
 		echo '<?xml version="1.0" encoding="UTF-8"?><info>';
 		echo self::toXmlTag('version', $this->getExtensionVersion());
@@ -75,6 +76,8 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 	}
 
 	public function storesAction() {
+		ob_clean();
+		
 		$this->verifyAccess();
 
 		header("Content-type: text/xml");		
@@ -95,6 +98,8 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 	}
 	
 	public function orderListAction(){
+		ob_clean();
+		
 		$this->verifyAccess();
 		if($this->model->getData('enable_order_export')==0) {
 			echo "Access Denied";
@@ -158,6 +163,8 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 
 	public function indexAction()
 	{
+		ob_clean();
+		
 		$this->verifyAccess();
 		if($this->model->getData('enable_product_feed') == 0){
 			echo "Access Denied";
@@ -169,9 +176,11 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 
 		$products = Mage::getModel('catalog/product')
 			->getCollection()
+			->addWebsiteFilter(array(Mage::app()->getStore()->getWebsiteId()))
 			->addStoreFilter(Mage::app()->getStore()->getStoreId())
 			->addAttributeToFilter('visibility', 4)
-			->addAttributeToSelect('*')->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
+			->addAttributeToSelect('*')
+			->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
 
 		header("Content-type: text/xml");
 		
@@ -226,7 +235,9 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 		if(is_bool($value)) {
 			$value = $value ? 'true' : 'false';
 		} else {
-			$value = htmlspecialchars($value);
+			// Remove control characters
+			$value = preg_replace('/[\x00-\x1F]/', '', $value);
+			$value = htmlspecialchars($value, ENT_XML1);
 		}
 		return "<$tag>".$value."</$tag>";
 	} 

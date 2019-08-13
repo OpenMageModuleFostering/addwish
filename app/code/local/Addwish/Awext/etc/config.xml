@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Addwish_Awext>
-			<version>0.19.1</version>
+			<version>0.19.2</version>
 		</Addwish_Awext>
 	</modules>
 	<frontend>
@@ -25,10 +25,10 @@
 			</controller_action_layout_load_before>
 			<customer_register_success>
 				<observers>
-					<inspectCartAddData>
+					<customerRegisterData>
 						<class>Addwish_Awext_Model_Observer</class>
 						<method>customerRegisterData</method>
-					</inspectCartAddData>
+					</customerRegisterData>
 				</observers>
 			</customer_register_success>
 			<checkout_cart_add_product_complete>
@@ -39,6 +39,14 @@
 					</inspectCartAddData>
 				</observers>
 			</checkout_cart_add_product_complete>
+			<checkout_onepage_controller_success_action>
+                <observers>
+                    <orderSuccess>
+                        <class>Addwish_Awext_Model_Observer</class>
+                        <method>orderSuccess</method>
+                    </orderSuccess>
+                </observers>
+            </checkout_onepage_controller_success_action>
 		</events>
 		<routers>
 			<awext>

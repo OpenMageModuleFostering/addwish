@@ -36,6 +36,9 @@ class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 		foreach($extraAttributes as $attribute) {
 			try {
 				$data[$attribute] = $product->getAttributeText($attribute);
+				if($data[$attribute] === false) {
+					$data[$attribute] = $product->getData($attribute);
+				}
 			} catch(Exception $e)  {
 				// Ignore attribute errors
 			}
@@ -51,13 +54,17 @@ class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 	}
 
 	public function getProductPrice($product, $discountPrice = false) {
-		
-		$price = $product->getPrice();
+		if($product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_GROUPED) {
+            $p = $this->cheapestProductFromGroup($product);
+            if (isset($p)) {
+                $product = $p;
+            }
+		}
+
 		if ($discountPrice) {
-			$price = Mage::getModel('catalogrule/rule')->calcProductPriceRule($product, $price);
-			if (!isset($price)) {
-				$price = $product->getFinalPrice();
-			}
+			$price = $product->getFinalPrice();
+		} else {
+			$price = $product->getPrice();
 		}
 
 		$pricesIncludeTax = Mage::getStoreConfig(Mage_Tax_Model_Config::CONFIG_XML_PATH_PRICE_INCLUDES_TAX);
@@ -74,40 +81,64 @@ class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 
 	}
 
+	private function cheapestProductFromGroup($product) {
+        $cheapest = null;
+        $associated = $product->getTypeInstance(true)->getAssociatedProducts($product);
+        foreach ($associated as $p) {
+            if ($cheapest == null || $cheapest->getFinalPrice() > $p->getFinalPrice()) {
+                $cheapest = $p;
+            }
+        }
+        return $cheapest;
+    }
+
+
 	public function getProductHierarchies($product) {
 		$cats = $product->getCategoryIds();
 
 		// Remove category id's that are parent of others
+		$whiteList = array();
 		foreach ($cats as $categoryId) {
 			$category = Mage::getModel('catalog/category')->load($categoryId);
 			$parentCategories = $category->getParentCategories();
 			foreach ($parentCategories as $parent) {
+				$whiteList[] = $parent->getId();
 				if($categoryId == $parent->getId()) {
 					continue;
 				}
+
 				$key = array_search($parent->getId(),$cats);
 				if($key !== false) {
 					unset($cats[$key]);
 				}
 			}
 		}
-
+		
 		$hierarchies = array();
 		foreach ($cats as $categoryId) {
 			$category = Mage::getModel('catalog/category')->load($categoryId);
-			$parentCategories = $category->getParentCategories();
-			$hierarchy = array();
-			foreach ($parentCategories as $parent) {
-				$name = trim($parent->getName());
-				if($name != "") {
-					$hierarchy[] = $name;
-				}
-			}
+			$hierarchy = $this->getParentCategory($category, $whiteList);
 			if(count($hierarchy) > 0) {
 				$hierarchies[] = $hierarchy;
 			}
 		}
 		return $hierarchies;
+	}
+
+	private function getParentCategory($category, $whiteList) {
+		$parent = $category->getParentCategory();
+		if($parent->getParentId()) {
+			$list = $this->getParentCategory($parent, $whiteList);
+		} else {
+			$list = array();
+		}
+		if(in_array($category->getId(), $whiteList)) {
+			$name = trim($category->getName());
+			if($name != "")	{
+				$list[] = $name;
+			}
+		}
+		return $list;
 	}
 
 	public function getProductInStock($product) {

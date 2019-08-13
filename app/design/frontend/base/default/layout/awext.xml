@@ -12,6 +12,7 @@
 	<default>
 		<reference name="before_body_end">
 			<block type="core/template" name="addwish-tracking" template="addwish/integrator.phtml" />
+			<block type="core/template" name="addwish-conversion" template="addwish/conversion-span.phtml"/>
 		</reference>
 	</default>
 	<catalog_product_view>
@@ -24,11 +25,6 @@
 			<block type="core/template" name="addwish-basket" template="addwish/basket-span.phtml" after="-" />
 		</reference>
 	</checkout_cart_index>
-	<checkout_onepage_success>
-		<reference name="before_body_end">
-			<block type="core/template" name="addwish-conversion" template="addwish/conversion-span.phtml" after="-" />
-		</reference>
-	</checkout_onepage_success>
 	<awext_index_search>
 		<reference name="content">
 			<block type="core/template" name="addwish-search-page" template="addwish/search-result-page.phtml" />
