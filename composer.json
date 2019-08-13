@@ -3,7 +3,7 @@
     "type": "magento-module",
     "license": "GNU-General-Public-License-(GPL)",
     "homepage": "",
-    "description": " New and updated extension to integrate all addwish features ",
+    "description": "Improvements to support more magento versions",
     "authors": [
     {
         "name": "addwish",

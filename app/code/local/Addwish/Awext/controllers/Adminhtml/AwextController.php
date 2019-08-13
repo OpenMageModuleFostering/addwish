@@ -82,7 +82,8 @@ class Addwish_Awext_Adminhtml_AwextController extends Mage_Adminhtml_Controller_
 	}
 	public function generatefeedAction(){
 		$products_out='<?xml version="1.0" encoding="UTF-8"?><products>';
-		$products = Mage::getModel('catalog/product')->getCollection()->addAttributeToFilter('visibility', 4);
+$currentStore=Mage::app()->getStore()->getStoreId();
+		$products = Mage::getModel('catalog/product')->getCollection()->setStoreId($currentStore)->addAttributeToFilter('visibility', 4);
 		$products->addAttributeToSelect('*');
 		foreach($products as $product) {
 			$imageUrl = Mage::helper('catalog/image')->init($product , 'thumbnail')->resize(256);
