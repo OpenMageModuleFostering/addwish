@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Addwish_Awext>
-			<version>0.20.0</version>
+			<version>0.20.1</version>
 		</Addwish_Awext>
 	</modules>
 	<frontend>
