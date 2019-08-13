@@ -22,23 +22,9 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 	}
 
 	protected function verifyAccess() {
-		if($this->model->getData('ipaddress')!='') {
+		if($this->model->getData('ipaddress') != '') {
 			$allowedIps=explode(",",$this->model->getData('ipaddress'));
-			$ipaddress = '';
-			if ($_SERVER['HTTP_CLIENT_IP'])
-				$ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-			else if($_SERVER['HTTP_X_FORWARDED_FOR'])
-				$ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			else if($_SERVER['HTTP_X_FORWARDED'])
-				$ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-			else if($_SERVER['HTTP_FORWARDED_FOR'])
-				$ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-			else if($_SERVER['HTTP_FORWARDED'])
-				$ipaddress = $_SERVER['HTTP_FORWARDED'];
-			else if($_SERVER['REMOTE_ADDR'])
-				$ipaddress = $_SERVER['REMOTE_ADDR'];
-			else
-				$ipaddress = 'UNKNOWN';
+			$ipaddress = self::getClientIp();
 			if(!in_array($ipaddress,$allowedIps)) {
 				echo "Access Denied";
 				exit;
@@ -78,8 +64,7 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
         echo '</stores>';
 
 	}
-
-
+	
 	public function orderListAction(){
 		$this->verifyAccess();
 		if($this->model->getData('enable_order_export')==0) {
@@ -90,15 +75,23 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 		$page = (int)$this->getRequest()->getParam('page');
 		$pageSize = (int)$this->getRequest()->getParam('pageSize');
 
+		$exportToDate = new DateTime($this->getRequest()->getParam('exportToDate'));
+		if($this->getRequest()->getParam('exportFromDate')) {
+			$exportFromDate = new DateTime($this->getRequest()->getParam('exportFromDate'));
+		} else {
+			$days = (int)$this->getRequest()->getParam('days', 7);
+			$exportFromDate = clone $exportToDate;
+			$exportFromDate->modify('-'.$days.' day');
+		}
 
-		$exportFromDate=$this->getRequest()->getParam('exportFromDate');
-		$exportToDate=$this->getRequest()->getParam('exportToDate');
-		$fromDate = date('Y-m-d H:i:s', strtotime($exportFromDate));
-		$toDate = date('Y-m-d H:i:s', strtotime($exportToDate));
+		$exportFromDate = $exportFromDate->format('Y-m-d H:i:s');
+		$exportToDate = $exportToDate->format('Y-m-d H:i:s');
+
 		$orders = Mage::getModel('sales/order')->getCollection()
 			->addFieldToFilter('store_id', Mage::app()->getStore()->getStoreId())
-			->addAttributeToFilter('created_at', array('from'=>$fromDate, 'to'=>$toDate))
+			->addAttributeToFilter('created_at', array('from'=>$exportFromDate, 'to'=>$exportToDate))
 			->addAttributeToFilter('status', array('eq' => Mage_Sales_Model_Order::STATE_COMPLETE));
+
 		header("Content-type: text/xml");
 		echo '<?xml version="1.0" encoding="UTF-8"?><orders';
 		if($pageSize > 0) {
@@ -106,15 +99,27 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 			$orders->setPageSize($pageSize);
 			echo ' last-page-number="' . ($orders->getLastPageNumber() - 1) . '"';
 		} 
-		echo '><exportFromDate>'.$exportFromDate.'</exportFromDate><exportToDate>'.$exportToDate.'</exportToDate>';
+		echo '>';
+
+		echo self::toXmlTag('exportFromDate', $exportFromDate);
+		echo self::toXmlTag('exportToDate', $exportToDate);
+
 		foreach($orders  as $order){
-			$order_total=number_format($order->getData('base_grand_total'), 2, '.', '');
-			echo '<order><orderDate>'.$order->getData('created_at').'</orderDate><orderNumber>'.$order->getData('increment_id').'</orderNumber><orderTotal>'.$order_total.'</orderTotal><orderLines>';
+			$order_total = number_format($order->getData('base_grand_total'), 2, '.', '');
+			echo '<order>';
+			echo self::toXmlTag('orderDate', $order->getData('created_at'));
+			echo self::toXmlTag('orderNumber', $order->getData('increment_id'));
+			echo self::toXmlTag('orderTotal', $order_total);
+			echo '<orderLines>';
 			$items = $order->getAllItems();
 			foreach($items as $orderItem) {
-			  	$_product = Mage::getModel('catalog/product')
-					->load($orderItem->getProductId());
-				echo '<orderLine><productnumber>'.$_product->getId().'</productnumber><productURL>'.$_product->getProductUrl().'</productURL><quantity>'.(int)$orderItem->getData('qty_ordered').'</quantity></orderLine>';
+			  	$_product = Mage::getModel('catalog/product')->load($orderItem->getProductId());
+				echo '<orderLine>';
+				echo self::toXmlTag('productnumber', $_product->getSku());
+				echo self::toXmlTag('id', $_product->getId());
+				echo self::toXmlTag('productURL', $_product->getProductUrl());
+				echo self::toXmlTag('quantity', (int)$orderItem->getData('qty_ordered'));
+				echo '</orderLine>';
 			}
 			echo '</orderLines></order>';
 		}
@@ -184,5 +189,21 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 		}
 		return "<$tag>".$value."</$tag>";
 	} 
+
+	private static function getClientIp() {
+		foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
+	        if (array_key_exists($key, $_SERVER) === true){
+	            foreach (explode(',', $_SERVER[$key]) as $ip){
+	                $ip = trim($ip);
+
+	                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
+	                    return $ip;
+	                }
+	            }
+	        }
+	    }
+        return 'UNKNOWN';
+	}
+
 
 }
