@@ -1,13 +1,7 @@
-<link rel="stylesheet" href="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>adminhtml/default/default/css/addwish.css" />
-<link rel="stylesheet" href="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>adminhtml/default/default/boxes.css" />
-<div style="float: left; margin-top: 0;">
-	<img src="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>adminhtml/default/default/images/addwish/addwish.png" alt="addwish logo" />
-</div>
-<div class='clear'></div>
-<div class="introtext">Great! You’ve successfully installed the addwish for business extension. This will allow you to quickly implement changes to how addwish functions on your webshop. We’ve made the extension as easy to use as possible but if you do have any questions don’t hesitate to contact us on <a href="mailto:support@addwish.com">support@addwish.com</a>. Alternatively, check out our FAQs on <a href="http://addwish.com/company/faq.html" target="_blank">http://addwish.com/company/faq.html</a>. We hope you enjoy growing your business with addwish!</div>
+<div class="headertext">Great! You’ve successfully installed the addwish for business extension. This will allow you to quickly implement changes to how addwish functions on your webshop. We’ve made the extension as easy to use as possible but if you do have any questions don’t hesitate to contact us on <a href="mailto:support@addwish.com">support@addwish.com</a>. Alternatively, check out our FAQs on <a href="http://addwish.com/company/faq.html" target="_blank">http://addwish.com/company/faq.html</a>. We hope you enjoy growing your business with addwish!</div>
 <div class="entry-edit">
-	<div class="entry-edit-head collapseable">
-		<a onclick="Fieldset.toggleCollapse('general_region', ''); return false;" href="#" id="general_region-head" class="">Script Setup</a>
+	<div class="entry-edit-head">
+		<h4>Script Setup</h4>
 	</div>
 	<form action='' method='post'>
 <?php
@@ -18,7 +12,7 @@ $currentStore=Mage::app()->getRequest()->getParam('storeconfig');
 ?>
 <input type='hidden' name='action' value='scriptsetup'/>
 		<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
-		<fieldset id="general_region" class="config collapseable">
+		<fieldset id="general_region" class="config">
 			<legend>Script Setup</legend>
 			<?php 
 			$model = Mage::getModel('awext/awext')->load($currentStore);
@@ -47,16 +41,14 @@ Once you have an addwish business ID enter it in the box below and press save.</
 
 <div class='clear'></div>
 <div class="entry-edit">
-	<div class="entry-edit-head collapseable">
-		<a
-			onclick="Fieldset.toggleCollapse('general_Dataregion', ''); return false;"
-			href="#" id="general_Dataregion-head" class="">Data Export Setup</a>
+	<div class="entry-edit-head">
+		<h4>Data Export Setup</h4>
 	</div>
 	<form action='' method='post'>
 	<input type='hidden' name='action' value='dataexport'/>
 		<input name="form_key" type="hidden"
 			value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
-		<fieldset id="general_Dataregion" class="config collapseable">
+		<fieldset id="general_Dataregion" class="config">
 			<legend>Data Export Setup</legend>
 			<div style="margin-bottom: 10px" class="introtext">
 This extension will automatically create a product feed and an order history feed, which will allow addwish to correctly identify and display all the products on your webshop <br>and create relations between them, based on your historical orders. <br>

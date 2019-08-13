@@ -1,29 +1,33 @@
+<link rel="stylesheet" href="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>adminhtml/default/default/css/addwish.css" />
 <?php
 $currentStore= Mage::app()->getDefaultStoreView()->getStoreId();
 if(Mage::app()->getRequest()->getParam('storeconfig')){
-$currentStore=Mage::app()->getRequest()->getParam('storeconfig');
+    $currentStore=Mage::app()->getRequest()->getParam('storeconfig');
 }
 ?>
 <form action="" name="addwish_store_selector"  id="addwish_store_selector">
-		<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
-<div class="switcher">
-    <label for="store_switcher">Current Configuration Scope:</label>
-    <a class="link-store-scope" title="What is this?" onclick="this.target='_blank'" href="http://www.magentocommerce.com/knowledge-base/entry/understanding-store-scopes">What is this?</a>    <select onchange="addwish_store_selector.submit()" class="system-config-store-switcher" id="storeconfig" name="storeconfig"">
- <?php
-foreach (Mage::app()->getWebsites() as $website) {
-    foreach ($website->getGroups() as $group) {
-        $stores = $group->getStores();
-        foreach ($stores as $store) {
-$selected='';
-if($store->getStoreId()==$currentStore){
-$selected="selected='selected'";
-}
-			echo "<option value='".$store->getStoreId()."' ".$selected.">".$store->getName()."</option>";
-        }
-    }
-}
-?>
-                    </select>
-        
+    <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+    <div class="switcher">
+        <label for="store_switcher">Current Configuration Scope:</label>
+        <a class="link-store-scope" title="What is this?" onclick="this.target='_blank'" href="http://www.magentocommerce.com/knowledge-base/entry/understanding-store-scopes">What is this?</a>
+        <select onchange="addwish_store_selector.submit()" class="system-config-store-switcher" id="storeconfig" name="storeconfig"">
+        <?php
+        foreach (Mage::app()->getWebsites() as $website) {
+            foreach ($website->getGroups() as $group) {
+                $stores = $group->getStores();
+                foreach ($stores as $store) {
+                    $selected='';
+                    if($store->getStoreId()==$currentStore){
+                        $selected="selected='selected'";
+                    }
+                    echo "<option value='".$store->getStoreId()."' ".$selected.">".$store->getName()."</option>";
+                }
+            }
+        }?>
+        </select>
     </div>
-</form>
+</form>        
+<div style="float: left; margin-top: 0;">
+    <img src="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>adminhtml/default/default/images/addwish/addwish.png" alt="addwish logo" />
+</div>
+<div class="clear"></div>

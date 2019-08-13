@@ -1,19 +1,7 @@
-<link
-	rel="stylesheet"
-	href="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>adminhtml/default/default/css/addwish.css" />
-	<link
-	rel="stylesheet"
-	href="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>adminhtml/default/default/boxes.css" />
-<div style="float: left; margin-top: 0;">
-	<img
-		src="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN);?>adminhtml/default/default/images/addwish/addwish.png"
-		alt="addwish logo" />
-
-</div>
-<div class='clear'></div>
-<div class="entry-edit">
-	<div class="entry-edit-head collapseable">
-		<a class="" id="general_recommend-head" href="#" onclick="Fieldset.toggleCollapse('general_recommend', ''); return false;">Recommendations</a>
+<div class="headertext">&nbsp;</div>
+<div class="entry-edit" style="top:-200px">
+	<div class="entry-edit-head">
+		<h4>Recommendations</h4>
 	</div>
 	<form action="" method="post">
 <?php
@@ -25,7 +13,7 @@ $currentStore=Mage::app()->getRequest()->getParam('storeconfig');
 	<input type="hidden" name="action" value="recomendations">
 		<input name="form_key" type="hidden"
 			value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
-		<fieldset class="config collapseable" id="general_recommend">
+		<fieldset class="config" id="general_recommend">
 			<legend>Recomendations</legend>
 			<?php 
 			$model = Mage::getModel('awext/awext')->load($currentStore);
