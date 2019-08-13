@@ -3,7 +3,7 @@
 class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
-	public function getProductData($product) {
+	public function getProductData($product, $extraAttributes = array()) {
 		$data = array();
 
 		$data['url'] = $product->getProductUrl();
@@ -33,8 +33,14 @@ class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 			$genderLabel = $attr->getSource()->getOptionText($product->getData('gender'));
 			$data['gender'] = $genderLabel;
 		}
-		$data['pricedetail'] = $product->getData('pricedetail');
+		foreach($extraAttributes as $attribute) {
+			try {
+				$data[$attribute] = $product->getAttributeText($attribute);
+			} catch(Exception $e)  {
+				// Ignore attribute errors
+			}
 
+		}
 		return $data;
 	}
 
@@ -48,7 +54,7 @@ class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 		
 		$price = $product->getPrice();
 		if ($discountPrice) {
-			$price = Mage::getModel('catalogrule/rule')->calcProductPriceRule($product, $product->getFinalPrice());
+			$price = Mage::getModel('catalogrule/rule')->calcProductPriceRule($product, $price);
 			if (!isset($price)) {
 				$price = $product->getFinalPrice();
 			}

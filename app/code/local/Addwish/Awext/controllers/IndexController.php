@@ -21,11 +21,14 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 		$this->renderLayout();			   
 	}
 
-	protected function verifyAccess() {
+	protected function verifyAccess($return = false) {
 		if($this->model->getData('ipaddress') != '') {
 			$allowedIps=explode(",",$this->model->getData('ipaddress'));
 			$ipaddress = self::getClientIp();
 			if(!in_array($ipaddress,$allowedIps)) {
+				if($return) {
+					return false;
+				}
 				echo "Access Denied";
 				exit;
 			}
@@ -42,13 +45,32 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
                 exit;
             }
         } 
-
+		if($return) {			
+			return true;
+		}
 	}
 
 	// No access control on this method
 	public function infoAction() {
 		header("Content-type: text/xml");		
-		echo '<?xml version="1.0" encoding="UTF-8"?><info><version>'.$this->getExtensionVersion().'</version></info>';
+		echo '<?xml version="1.0" encoding="UTF-8"?><info>';
+		echo self::toXmlTag('version', $this->getExtensionVersion());
+		$access = $this->verifyAccess(true);
+		echo self::toXmlTag('access', $access ? 'true' : 'false');
+		echo self::toXmlTag('clientIp', self::getClientIp());
+		if($access) {
+			$attributes = Mage::getResourceModel('catalog/product_attribute_collection')->getItems();
+			echo '<product_attributes>';
+			foreach ($attributes as $attribute){
+				echo '<attribute>';
+			    	echo self::toXmlTag('attribute_code', $attribute->getAttributeCode());
+			    	echo self::toXmlTag('attribute_name', $attribute->getFrontendLabel());
+			    echo '</attribute>';
+			}
+			echo '</product_attributes>';
+		} 
+
+		echo '</info>';
 		exit;
 	}
 
@@ -160,10 +182,14 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 			echo ' last-page-number="' . ($products->getLastPageNumber() - 1) . '"';
 		} 
 		echo '>';
-
+		$extraAttributes = $this->getRequest()->getParam('extraAttributes', '');
+		if(trim($extraAttributes)) {
+			$extraAttributes = explode(',', $extraAttributes);
+		} else {
+			$extraAttributes = array();
+		}
 		foreach($products as $product) {
-
-			$data = Mage::helper('awext')->getProductData($product);
+			$data = Mage::helper('awext')->getProductData($product, $extraAttributes);
 			$productOut = '<product>';
 			foreach($data as $key => $value) {
 				if($key == 'hierarchies') {
@@ -177,7 +203,15 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 					}
 					$productOut.= "</hierarchies>";						
 				} else {
-					$productOut .= self::toXmlTag($key, $value);
+					if(is_array($value)) {
+						$productOut .= "<$key>";
+						foreach($value as $v) {
+							$productOut .= self::toXmlTag('value', $v);
+						}
+						$productOut .= "</$key>";
+					} else {
+						$productOut .= self::toXmlTag($key, $value);
+					}
 				}
 			}
 
