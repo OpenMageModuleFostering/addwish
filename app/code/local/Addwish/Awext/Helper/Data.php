@@ -123,8 +123,8 @@ class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 	private static $_categoryData = null;
 	private function getCategoryData() {
 
-		if($this->_categoryData != null) {
-			return $this->_categoryData;
+		if(self::$_categoryData != null) {
+			return self::$_categoryData;
 		}
 		$root = Mage::app()->getStore()->getRootCategoryId(); 
 		
@@ -160,18 +160,25 @@ class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 		}
 		
-		$this->_categoryData = array(
+		self::$_categoryData = array(
 			'parentCategories' => $parentList,
 			'parentForCategory' => $parentForCategory,
 			'categoryName' => $categoryName
 		);
-		return $this->_categoryData;
+		return self::$_categoryData;
 	}
 
 	public function getProductStockInfo($product) {
-
-		if($product->isConfigurable()) {
+		
+		$inStock = false;
+		$stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
+		if ($product->isSaleable() && $stock->getIsInStock() != 0) {
+			$inStock = true;
+		}
+		if($inStock && $product->isConfigurable()) {
 			$allProducts = $product->getTypeInstance(true)->getUsedProducts(null, $product);
+			$ids = Mage::getResourceSingleton('catalog/product_type_configurable')->getChildrenIds($product->getId());
+			$allProducts = Mage::getModel('catalog/product')->getCollection()->addIdFilter($ids);
 			$inStock = false;
 			foreach ($allProducts as $p) {
 				$stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($p);
@@ -182,11 +189,6 @@ class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 			}
 			return array('inStock' => $inStock, 'qty' => $stock ? $stock->getQty() : 0);
 		} else {
-			$inStock = false;
-			$stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
-			if ($product->isSaleable() && $stock->getIsInStock() != 0) {
-				$inStock = true;
-			}
 			return array('inStock' => $inStock, 'qty' => $stock->getQty());
 		}
 	}
