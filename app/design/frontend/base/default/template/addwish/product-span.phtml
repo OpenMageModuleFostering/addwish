@@ -43,12 +43,12 @@ if(isset($specialPrice) && $specialPrice>0 && $specialPrice<$regularPrice ){
 
     if (($today > $spcialPriceDateBegin) && ($today < $spcialPriceDateEnd))
     {
-		echo ' data-price="'.$specialPrice.'"';
-		echo ' data-previousprice="'.$regularPrice.'" ';
+		echo ' data-price="'.number_format(Mage::getModel('directory/currency')->formatTxt($specialPrice, array('display' => Zend_Currency::NO_SYMBOL)), 2, '.', '').'"';
+		echo ' data-previousprice="'.number_format(Mage::getModel('directory/currency')->formatTxt($regularPrice, array('display' => Zend_Currency::NO_SYMBOL)), 2, '.', '').'"';
     }
     else
     {
-      echo ' data-price="'.$regularPrice.'" ';
+      echo ' data-price="'.number_format(Mage::getModel('directory/currency')->formatTxt($regularPrice, array('display' => Zend_Currency::NO_SYMBOL)), 2, '.', '').'" ';
     }
 	
 	
@@ -56,7 +56,7 @@ if(isset($specialPrice) && $specialPrice>0 && $specialPrice<$regularPrice ){
 	
 	
 }else{
-	echo ' data-price="'.$regularPrice.'" ';
+	echo ' data-price="'.number_format(Mage::getModel('directory/currency')->formatTxt($regularPrice, array('display' => Zend_Currency::NO_SYMBOL)), 2, '.', '').'" ';
 }
 ?>
 data-productnumber="<?php echo $product->getId();?>"

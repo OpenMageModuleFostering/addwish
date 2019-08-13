@@ -114,12 +114,12 @@ $allowedIps=explode(",",$model->getData('ipaddress'));
 
 				if (($today > $spcialPriceDateBegin) && ($today < $spcialPriceDateEnd))
 				{
-					$products_out.= "<price>".$specialPrice."</price>";
-					$products_out.= "<previousprice>".$regularPrice."</previousprice>";
+					$products_out.= "<price>".number_format(Mage::getModel('directory/currency')->formatTxt($specialPrice, array('display' => Zend_Currency::NO_SYMBOL)), 2, '.', '')."</price>";
+					$products_out.= "<previousprice>".number_format(Mage::getModel('directory/currency')->formatTxt($regularPrice, array('display' => Zend_Currency::NO_SYMBOL)), 2, '.', '')."</previousprice>";
 				}
 				else
 				{
-					$products_out.= "<price>".$regularPrice."</price>";
+					$products_out.= "<price>".number_format(Mage::getModel('directory/currency')->formatTxt($regularPrice, array('display' => Zend_Currency::NO_SYMBOL)), 2, '.', '')."</price>";
 				}
 				
 				
@@ -127,7 +127,7 @@ $allowedIps=explode(",",$model->getData('ipaddress'));
 				
 				
 			}else{
-				$products_out.= "<price>".$regularPrice."</price>";
+				$products_out.= "<price>".number_format(Mage::getModel('directory/currency')->formatTxt($regularPrice, array('display' => Zend_Currency::NO_SYMBOL)), 2, '.', '')."</price>";
 			}
 			
 			

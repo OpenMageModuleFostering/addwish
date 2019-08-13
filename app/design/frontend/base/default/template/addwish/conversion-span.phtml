@@ -15,7 +15,7 @@ foreach($cartItems as $cartProduct){
 if($product->isVisibleInSiteVisibility()){
 	?>
 	<span class="addwish-product"
-data-unit-price="<?php echo number_format($cartProduct->getData('price'), 2, '.', '');?>"
+data-unit-price="<?php echo number_format(Mage::getModel('directory/currency')->formatTxt($cartProduct->getData('price'), array('display' => Zend_Currency::NO_SYMBOL)), 2, '.', '');?>"
 data-url="<?php echo $product->getProductUrl();?>"
 data-productnumber="<?php echo $product->getId();?>"
 data-sku="<?php echo $product->getSku();?>"
