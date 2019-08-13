@@ -18,6 +18,7 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
             }
         }
 		$this->model = Mage::getModel('awext/awext')->load(Mage::app()->getStore()->getStoreId());
+		Mage::app()->getStore()->setCurrentCurrencyCode(Mage::app()->getStore()->getDefaultCurrencyCode());
 
 		return $this;
 	}
@@ -53,6 +54,10 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 	// No access control on this method
 	public function infoAction() {
 		ob_clean();
+		if(ini_get('zlib.output_compression')) {
+			header("Content-encoding: gzip");		
+		}
+
 		header("Content-type: text/xml");		
 		echo '<?xml version="1.0" encoding="UTF-8"?><info>';
 		echo self::toXmlTag('version', $this->getExtensionVersion());
@@ -77,6 +82,9 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 
 	public function storesAction() {
 		ob_clean();
+		if(ini_get('zlib.output_compression')) {
+			header("Content-encoding: gzip");		
+		}
 		
 		$this->verifyAccess();
 
@@ -99,6 +107,9 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 	
 	public function orderListAction(){
 		ob_clean();
+		if(ini_get('zlib.output_compression')) {
+			header("Content-encoding: gzip");		
+		}
 		
 		$this->verifyAccess();
 		if($this->model->getData('enable_order_export')==0) {
@@ -164,6 +175,9 @@ class Addwish_Awext_IndexController extends Mage_Core_Controller_Front_Action
 	public function indexAction()
 	{
 		ob_clean();
+		if(ini_get('zlib.output_compression')) {
+			header("Content-encoding: gzip");		
+		}
 		
 		$this->verifyAccess();
 		if($this->model->getData('enable_product_feed') == 0){

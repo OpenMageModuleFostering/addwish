@@ -35,14 +35,16 @@ class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 		}
 		foreach($extraAttributes as $attribute) {
 			try {
-				$data[$attribute] = $product->getAttributeText($attribute);
-				if($data[$attribute] === false) {
-					$data[$attribute] = $product->getData($attribute);
+				$attributeData = $product->getData($attribute);
+				if($attributeData !== null) {
+					$data[$attribute] = $product->getAttributeText($attribute);
+					if($data[$attribute] === false || $data[$attribute] === array()) {
+						$data[$attribute] = $attributeData;
+					}
 				}
 			} catch(Exception $e)  {
 				// Ignore attribute errors
 			}
-
 		}
 		return $data;
 	}
@@ -67,16 +69,8 @@ class Addwish_Awext_Helper_Data extends Mage_Core_Helper_Abstract
 			$price = $product->getPrice();
 		}
 
-		$pricesIncludeTax = Mage::getStoreConfig(Mage_Tax_Model_Config::CONFIG_XML_PATH_PRICE_INCLUDES_TAX);
-
-		if (!$pricesIncludeTax) {
-            $taxClassId = $product->getTaxClassId();
-			$taxCalculation = Mage::getModel('tax/calculation');
-			$request = $taxCalculation->getRateRequest();
-			$taxRate = $taxCalculation->getRate($request->setProductClassId($taxClassId));
-			$price = ($price / 100 * $taxRate) + $price;
-		}
-
+		$price = Mage::helper('tax')->getPrice($product, $price, true);
+		$price = Mage::helper('core')->currency($price, false, false);
 		return floatval($price);
 
 	}
