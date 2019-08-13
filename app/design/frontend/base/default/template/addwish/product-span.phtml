@@ -1,0 +1,68 @@
+<?php
+$product = Mage::registry('current_product');
+$specialPrice = number_format($product->getSpecialPrice(), 2, '.', '');
+$regularPrice = number_format($product->getPrice(), 2, '.', '');
+$product_image=Mage::helper('catalog/image')->init($product , 'thumbnail')->resize(256);
+?>
+<span class="addwish-product-info" style="display:none"
+data-title="<?php echo htmlentities($product->getName());?>"
+data-imgurl="<?php echo $product_image;?>"
+<?php
+if(isset($specialPrice) && $specialPrice>0){
+	echo 'data-price="'.$specialPrice.'"';
+	echo 'data-previousprice="'.$regularPrice.'" ';
+}else{
+	echo 'data-price="'.$regularPrice.'" ';
+}
+?>
+data-productnumber="<?php echo $product->getId();?>"
+data-sku="<?php echo $product->getSku();?>"
+data-url="<?php echo $product->getProductUrl();?>"
+data-currency="<?php echo Mage::app()->getStore()->getCurrentCurrencyCode();?>"
+<?php
+if($product->getData('brand')){
+	echo "data-brand='".$product->getData('brand')."'";
+}
+
+$cats = $product->getCategoryIds();
+$catJsonArray=array();
+foreach ($cats as $category_id) {
+	$category = Mage::getModel('catalog/category')->load($category_id) ;
+	foreach ($category->getParentCategories() as $parent) {
+		$catJsonArray[] = htmlentities($parent->getName());
+	}
+}
+?>
+data-category='<?php echo addslashes(json_encode($catJsonArray));?>'
+<?php if($product->isInStock()){
+	echo "data-instock='true'";
+}else{
+	echo "data-instock='false'";
+}
+if($product->getData('gender')){
+	$attr = $product->getResource()->getAttribute("gender");
+	$genderLabel = $attr->getSource()->getOptionText($product->getData('gender'));
+	echo "data-gender='".$genderLabel."'";
+}
+if($product->getData('pricedetail')){
+	echo "data-pricedetail='".$product->getData('pricedetail')."'";
+}
+if($product->getData('score')){
+	echo "data-score='".$product->getData('score')."'";
+}
+if($product->getData('newsletter-promotion')){
+	echo "data-newsletter-promotion='".$product->getData('newsletter-promotion')."'";
+}
+if($product->getData('recurrent')){
+	echo "data-recurrent='".$product->getData('recurrent')."'";
+}
+if($product->getData('sold-related')){
+	echo "data-sold-related='".$product->getData('sold-related')."'";
+}
+$uencURL=Mage::helper('checkout/cart')->getAddUrl($product);
+$elem1=explode("uenc/",$uencURL);
+$elem2=explode("/product",$elem1[1]);
+?>
+data-formkey='<?php echo Mage::getSingleton('core/session')->getFormKey();?>'
+data-uenc='<?php echo $elem2[0];?>'
+></span>

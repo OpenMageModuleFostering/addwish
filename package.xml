@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package>
+    <name>addwish</name>
+    <version>0.0.4</version>
+    <stability>devel</stability>
+    <license>OSL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Personalized recommendations, search and wishlist</summary>
+    <description>&lt;p&gt;&lt;b&gt;Get addwish on your site and we'll show your products on 	ours!&lt;/b&gt;&lt;/p&gt;&#xD;
+&#xD;
+&lt;p&gt;addwish is a wish list that lets users share the products they want with people who want to buy them. But unlike other wish lists, with addwish your products also appear as inspiration in searches for similar products on addwish.com. If addwish users select your product for their list, their family and friends are automatically directed to your web shop where they can make the purchase. &lt;/p&gt;&#xD;
+&#xD;
+&lt;ul&gt;&#xD;
+&lt;li&gt;Easy to install and maintenance free&lt;/li&gt;&#xD;
+&lt;li&gt;Increases traffic to your shop&lt;/li&gt;&#xD;
+&lt;li&gt;High conversion rates&lt;/li&gt;&#xD;
+&lt;/ul&gt;</description>
+    <notes>&lt;p&gt;&lt;b&gt;Get addwish on your site and we'll show your products on 	ours!&lt;/b&gt;&lt;/p&gt;&#xD;
+&#xD;
+&lt;p&gt;addwish is a wish list that lets users share the products they want with people who want to buy them. But unlike other wish lists, with addwish your products also appear as inspiration in searches for similar products on addwish.com. If addwish users select your product for their list, their family and friends are automatically directed to your web shop where they can make the purchase. &lt;/p&gt;&#xD;
+&#xD;
+&lt;ul&gt;&#xD;
+&lt;li&gt;Easy to install and maintenance free&lt;/li&gt;&#xD;
+&lt;li&gt;Increases traffic to your shop&lt;/li&gt;&#xD;
+&lt;li&gt;High conversion rates&lt;/li&gt;&#xD;
+&lt;/ul&gt;</notes>
+    <authors><author><name>addwish</name><user>addwish</user><email>krj@addwish.com</email></author></authors>
+    <date>2016-01-29</date>
+    <time>08:16:01</time>
+    <contents><target name="magelocal"><dir name="Addwish"><dir name="Integrator"><dir name="Block"><dir name="Adminhtml"><dir name="Integrator"><file name="Grid.php" hash="3fa75f93b5251ffd849c662f964a1d57"/><file name="Renderer.php" hash="a7469e6df67f94a039a92874321da38e"/><dir name="View"><dir name="Tab"><dir name="Details"><file name="List.php" hash="d08e9b7f83f98b3050a7118ac2369242"/></dir><file name="Details.php" hash="b5220cabab90ccede514fa0e6766555b"/><file name="Form.php" hash="ad6373c64686899d246a11bb2fe17fc1"/><dir name="Recommend"><file name="List.php" hash="b35150ab52310670ab518cb45c1a2e33"/></dir><file name="Recommend.php" hash="6f19611e2e83f8247d97e591fc958bf1"/><dir name="Search"><file name="List.php" hash="5df43f1363e6ae96b94188d45ce7801a"/></dir><file name="Search.php" hash="73ffb13e76137acd67f9a9b9c7751358"/></dir><file name="Tabs.php" hash="1c573a29d7ceb90873409af2b674fc95"/></dir><file name="View.php" hash="42c8b170dae90fc7ef89d8dc5e99bc83"/></dir><file name="Integrator.php" hash="40496a2bd632188c498ada4477ac3752"/></dir><file name="Integrator.php" hash="458f91e566dc29429a8f4506485b254a"/></dir><dir name="Helper"><file name="Data.php" hash="a4de920a156bda655d1ae676f5080514"/></dir><dir name="Model"><file name="Integrator.php" hash="c41ae42230aa6837714da7922c626945"/><dir name="Mysql4"><dir name="Integrator"><file name="Collection.php" hash="d622ef3fcda60d4f980b1c504073c6a6"/></dir><file name="Integrator.php" hash="052377e4c9fdb94a912653287997e58b"/></dir><file name="Observer.php" hash="676fe6acac9d18cc98af41dd874a9d85"/></dir><dir name="controllers"><dir name="Adminhtml"><file name="IntegratorController.php" hash="173ce1c012f61f1457c4c0e3f72c70f4"/></dir><file name="IndexController.php" hash="ad35156483a306981af7e0537bab282d"/></dir><dir name="etc"><file name="config.xml" hash="ed48dc9dd2a070da53469a638684a491"/></dir><dir name="sql"><dir name="addwish_setup"><file name="mysql4-install-0.0.4.php" hash="3efb0b443436da1653d68797fba695dc"/></dir></dir></dir></dir></target><target name="mageskin"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="css"><file name="addwish.css" hash="f8711a6d3845f2c39698ca95064abb4c"/></dir><dir name="images"><dir name="addwish"><file name="addwish.png" hash="a588d24d1919d9206eff40a886b88ef1"/></dir></dir></dir></dir></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="integrator.xml" hash="7c7d92345ca22fb3f3ed42324d7b4656"/></dir><dir name="template"><dir name="integrator"><dir name="integrator"><file name="list.phtml" hash="4b2a16ca729f50f84c2e6b3d7fa67929"/></dir><file name="recommendations.phtml" hash="961ff25fb0409a75f222c58d5c48ef22"/><file name="search.phtml" hash="bcf56fe0d8728a45ca5421a0d6273385"/></dir></dir></dir></dir></dir><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="integrator.xml" hash="3b5dc56c43797ab0bc97c4f2860db9ed"/></dir><dir name="template"><dir name="addwish"><file name="basket-span.phtml" hash="43ae1f4ca8daad61d16ef84bbfcab2cf"/><file name="conversion-span.phtml" hash="69ab18c525182edc1b83b0690556ac8c"/><file name="integrator.phtml" hash="c28de947018ddc40f1a9dc9d6c51ee60"/><file name="product-span.phtml" hash="c1a0a4db17271f9d9ba522d159805e0c"/><file name="search-result-page.phtml" hash="d41d8cd98f00b204e9800998ecf8427e"/><file name="upsells-page.phtml" hash="6045046fe46f56ea37f0f3c43f6c5a1e"/></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Addwish_Integrator.xml" hash="b445d0c5897f7ecefabd04e2e4bc9530"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>
