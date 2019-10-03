@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/addwish",
+    "name": "OpenMageModuleFostering\/addwish",
     "type": "magento-module",
     "license": "GNU-General-Public-License-(GPL)",
     "homepage": "",
     "description": "New multisite module",
     "authors": [
-    {
-        "name": "addwish",
-        "email": "krj@addwish.com"
-    }
-],
+        {
+            "name": "addwish",
+            "email": "krj@addwish.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
